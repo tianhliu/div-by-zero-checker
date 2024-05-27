@@ -77,16 +77,16 @@ public class DivByZeroTransfer extends CFTransfer {
   private AnnotationMirror refineLhsOfComparison(
       Comparison operator, AnnotationMirror lhs, AnnotationMirror rhs) {
     
-    if (this.equal(rhs, this.zero())) {
-      if (operator == Comparison.EQ) {
-        return this.glb(lhs, this.zero());
-      }
-      else {
+    if (operator == Comparison.EQ) {
+      return this.glb(lhs, rhs);
+    }
+    else if (this.equal(rhs, this.zero())) {
         return this.glb(lhs, this.nonZero());
-      }
+    }
+    else {
+      return lhs;
     }
 
-    return lhs;
   }
 
   /**
